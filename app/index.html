@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vice Coast Cover Studio — GTA-style poster maker</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<header class="topbar">
+  <div>
+    <h1>Vice Coast Cover Studio</h1>
+    <p>Your photo, your caption — a GTA-style poster in one minute. Works fully offline; photos never leave your machine.</p>
+  </div>
+  <span class="pill">100% offline</span>
+</header>
+<main class="app">
+  <aside class="controls">
+    <section>
+      <h2>1 · Photos</h2>
+      <label class="file">Add your photos
+        <input id="photo" type="file" accept="image/*" multiple>
+      </label>
+      <div class="samples">
+        <button id="samplePier" type="button">Try sample: Pier</button>
+        <button id="sampleBoulevard" type="button">Try sample: Boulevard</button>
+      </div>
+      <div id="thumbs" class="thumbs" aria-label="Your photos"></div>
+      <p class="hint">Click a thumbnail to put that photo in the selected panel.</p>
+    </section>
+    <section>
+      <h2>2 · Layout</h2>
+      <div id="layouts" class="picker"></div>
+    </section>
+    <section>
+      <h2>3 · Grade</h2>
+      <div id="grades" class="picker"></div>
+    </section>
+    <section>
+      <h2>4 · Caption</h2>
+      <label>Title
+        <input id="title" type="text" maxlength="24" value="VICE COAST">
+      </label>
+      <label>Subtitle
+        <input id="subtitle" type="text" maxlength="40" value="sunset heist">
+      </label>
+    </section>
+    <section>
+      <h2>5 · Selected panel</h2>
+      <label>Zoom
+        <input id="zoom" type="range" min="1" max="3" step="0.05" value="1.15">
+      </label>
+      <div class="row">
+        <button id="centerPanel" type="button">Centre photo</button>
+        <button id="fillAll" type="button">One photo everywhere</button>
+        <button id="shuffle" type="button">Shuffle photos</button>
+      </div>
+    </section>
+    <section>
+      <h2>6 · Export</h2>
+      <div id="sizes" class="sizes"></div>
+      <div class="row">
+        <button id="export" type="button" class="primary">Export PNG</button>
+        <button id="exportAll" type="button">Export all 3 sizes</button>
+      </div>
+      <p id="status" role="status">Pick a layout and a grade, then export.</p>
+    </section>
+  </aside>
+  <section class="preview">
+    <canvas id="cover" width="900" height="900" aria-label="Cover preview"></canvas>
+    <p id="panelLabel" class="hint">Panel 1 of 9 — drag the photo to move it, scroll to zoom</p>
+  </section>
+</main>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
