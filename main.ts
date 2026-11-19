@@ -2,7 +2,7 @@
 // the output directory and writes dossier.json there, built by buildDossier
 // from vendor/makefun-app.ts. The output directory is /output, or
 // MAKEFUN_OUTPUT_DIR when that is set (outside the grader).
-import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-app.ts';
@@ -12,8 +12,13 @@ const outputDir = process.env.MAKEFUN_OUTPUT_DIR
   ? resolve(process.env.MAKEFUN_OUTPUT_DIR)
   : '/output';
 
-rmSync(outputDir, { recursive: true, force: true });
+// Clear only the CONTENTS of the output directory, never the directory
+// itself: in the grader sandbox /output is a mounted volume, and removing
+// the mount point throws EBUSY ("Device or resource busy").
 mkdirSync(outputDir, { recursive: true });
+for (const entry of readdirSync(outputDir)) {
+  rmSync(join(outputDir, entry), { recursive: true, force: true });
+}
 cpSync(join(repoRoot, 'app'), join(outputDir, 'app'), { recursive: true });
 cpSync(join(repoRoot, 'screenshots'), join(outputDir, 'screenshots'), { recursive: true });
 
