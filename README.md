@@ -11,6 +11,7 @@ Vice Coast Cover Studio turns your photos and a caption into GTA 6-style multi-p
 - **6 poster layouts** — nine-panel grid, hero + three, tilted snapshots, full-bleed hero, diagonal split, and double feature.
 - **6 Vice City grades** — Vice Sunset, Neon Nights, Golden Hour, Miami Pink, Teal Noir, and Bubblegum.
 - **Multi-photo panels** — each panel takes its own photo with crop, position, and zoom controls.
+- **Undo / redo** — Ctrl+Z, Ctrl+Shift+Z and Ctrl+Y, plus Undo/Redo buttons; every layout, grade, caption and panel change is one undo step.
 - **Editable title + subtitle** — type your own cover caption right on the poster.
 - **PNG export** — one click, in 1080×1080, 1080×1350, and 1920×1080.
 - **Fully offline** — static files only, no server or network needed.

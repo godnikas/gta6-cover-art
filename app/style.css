@@ -8,6 +8,8 @@ html, body { margin: 0; min-height: 100%; background: #0d0218; color: #f4eefc; f
 .topbar h1 { margin: 0; font-family: Anton, sans-serif; font-size: 30px; letter-spacing: 1px; color: #fff; text-transform: uppercase; }
 .topbar p { margin: 2px 0 0; color: #d9c8f5; max-width: 720px; }
 .pill { flex: none; padding: 6px 12px; border: 1px solid #00e5ff; border-radius: 999px; color: #00e5ff; font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; }
+.top-actions { display: flex; align-items: center; gap: 8px; flex: none; }
+.top-actions button { padding: 6px 12px; font-size: 13px; }
 .app { display: flex; gap: 24px; align-items: flex-start; padding: 20px 24px 32px; }
 .controls { width: 330px; flex: none; display: flex; flex-direction: column; gap: 18px; }
 .controls section { background: #1c0b33; border: 1px solid #3b0f66; border-radius: 12px; padding: 14px; }
@@ -21,6 +23,8 @@ input[type=range] { width: 100%; accent-color: #ff2d78; }
 .picker { display: flex; flex-wrap: wrap; gap: 8px; }
 button { font: inherit; font-weight: 600; padding: 9px 12px; border: 1px solid #5b2d8e; border-radius: 8px; background: #2b1055; color: #fff; cursor: pointer; }
 button:hover { border-color: #ff2d78; }
+button:disabled { opacity: .45; cursor: default; }
+button:disabled:hover { border-color: #5b2d8e; }
 button.primary { background: #ff2d78; border-color: #ff2d78; font-weight: 800; }
 button.primary:hover { background: #ff4d8f; }
 .pick.on, .swatch.on { outline: 2px solid #ffd319; outline-offset: 1px; }

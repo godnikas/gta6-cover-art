@@ -12,7 +12,11 @@
     <h1>Vice Coast Cover Studio</h1>
     <p>Your photo, your caption — a GTA-style poster in one minute. Works fully offline; photos never leave your machine.</p>
   </div>
-  <span class="pill">100% offline</span>
+  <span class="top-actions">
+    <button id="undoBtn" type="button" title="Undo (Ctrl+Z)" disabled>↩ Undo</button>
+    <button id="redoBtn" type="button" title="Redo (Ctrl+Shift+Z or Ctrl+Y)" disabled>↪ Redo</button>
+    <span class="pill">100% offline</span>
+  </span>
 </header>
 <main class="app">
   <aside class="controls">
@@ -55,6 +59,7 @@
         <button id="fillAll" type="button">One photo everywhere</button>
         <button id="shuffle" type="button">Shuffle photos</button>
       </div>
+      <p class="hint">Ctrl+Z undoes a change, Ctrl+Shift+Z (or Ctrl+Y) redoes it.</p>
     </section>
     <section>
       <h2>6 · Export</h2>

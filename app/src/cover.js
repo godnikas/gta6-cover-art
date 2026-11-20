@@ -72,23 +72,68 @@ export function freshPanel(photo = 0) {
 }
 
 /**
+ * One framing per panel: zoom and pan offsets that put a face, a torso or
+ * a detail in the frame. Pan y is positive toward the top of the photo —
+ * both bundled samples carry their subject's face in the top third, so a
+ * face framing needs a large positive y (the renderer clamps the pan to the
+ * photo's slack, so overshooting just pins the window to the top edge).
+ * The tables are per layout because a panel's shape decides which framing
+ * can show a face: a short wide panel needs a bigger y than a tall one.
+ */
+const FRAMINGS = {
+  grid9: [
+    { zoom: 1.9, x: -0.25, y: 1.3 }, // face, left
+    { zoom: 2.1, x: 0.1, y: 1.4 }, // face close, centre
+    { zoom: 1.7, x: 0.3, y: 1.2 }, // face, right
+    { zoom: 1.4, x: -0.3, y: 0.35 }, // torso, left
+    { zoom: 1.5, x: 0, y: 1.1 }, // face, centre
+    { zoom: 1.4, x: 0.3, y: 0.35 }, // torso, right
+    { zoom: 1.6, x: -0.3, y: -0.7 }, // detail, lower left
+    { zoom: 1.2, x: 0.1, y: -0.55 }, // wide, lower
+    { zoom: 1.7, x: 0.3, y: -0.75 }, // detail, lower right
+  ],
+  hero3: [
+    { zoom: 1.15, x: 0, y: 0.5 }, // hero: whole photo, face in frame
+    { zoom: 1.7, x: -0.1, y: 1.55 }, // face close
+    { zoom: 1.35, x: 0.25, y: 0.3 }, // mid shot
+    { zoom: 1.05, x: -0.15, y: -0.6 }, // wide, lower half
+  ],
+  tilt: [
+    { zoom: 1.7, x: -0.2, y: 1.0 }, // face
+    { zoom: 1.05, x: 0.1, y: -0.45 }, // wide scene, face out of frame
+    { zoom: 1.8, x: 0.2, y: 1.1 }, // face close, other side
+  ],
+  bleed: [{ zoom: 1.15, x: 0, y: 0.4 }],
+  split: [
+    { zoom: 1.5, x: -0.2, y: 0.7 }, // face side
+    { zoom: 1.15, x: 0.2, y: -0.3 }, // scene side
+  ],
+  duo: [
+    { zoom: 1.6, x: 0, y: 1.5 }, // face band
+    { zoom: 1.1, x: 0, y: -0.6 }, // wide band
+  ],
+};
+
+/**
  * Spreads one photo's crops across the layout's panels, so a single photo
  * fills the poster as varied framings — a close face, a wide shot, a detail —
  * instead of the same crop repeated. Deterministic, so exports repeat.
  */
 export function spreadCrops(state) {
+  const table = FRAMINGS[state.layout] ?? FRAMINGS.grid9;
   const n = panelCount(state.layout);
   for (let i = 0; i < n; i++) {
+    const framing = table[i] ?? table[table.length - 1];
     const slot = state.panels[i];
-    slot.zoom = 1.1 + (i % 3) * 0.28;
-    slot.x = ((i % 3) - 1) * 0.16;
-    slot.y = i % 2 === 0 ? 0.12 : -0.06;
+    slot.zoom = framing.zoom;
+    slot.x = framing.x;
+    slot.y = framing.y;
   }
 }
 
 /** A fresh cover state: the nine-panel grid, Vice Sunset, square, two samples. */
 export function freshState() {
-  return {
+  const state = {
     layout: 'grid9',
     grade: 'sunset',
     size: 'square',
@@ -97,6 +142,9 @@ export function freshState() {
     photos: [],
     panels: Array.from({ length: 9 }, (_, i) => freshPanel(i % 2)),
   };
+  // Open on varied framings, not nine copies of the same crop.
+  spreadCrops(state);
+  return state;
 }
 
 /** How many panels a layout shows. */
